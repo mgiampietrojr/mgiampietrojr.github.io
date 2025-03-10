@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Marco Giampietro - Perfil</title>
+        <style>
+            .cards-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 20px;
+                margin: 20px 0;
+            }
+
+            .skill-card {
+                background: #fff;
+                border-radius: 10px;
+                padding: 20px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease;
+            }
+
+            .skill-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .card-header {
+                display: flex;
+                align-items: center;
+                margin-bottom: 15px;
+                border-bottom: 2px solid #0077b5;
+                padding-bottom: 10px;
+            }
+
+            .check {
+                font-size: 1.5rem;
+                margin-right: 10px;
+            }
+
+            .card-header h3 {
+                margin: 0;
+                color: #0077b5;
+            }
+
+            .card-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .card-list li {
+                padding: 8px 0;
+                display: flex;
+                align-items: center;
+            }
+
+            .card-list li::before {
+                content: "🔹";
+                margin-right: 10px;
+                font-size: 0.8rem;
+            }
+            body {
+                font-family: sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f4f4f4;
+                color: #333;
+                display: flex;
+            }
+
+            nav {
+                width: 200px;
+                background-color: #0077b5;
+                color: #fff;
+                padding: 20px 20px 0 20px;
+                height: 100vh;
+                position: sticky;
+                top: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .profile-container {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .profile-img {
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 3px solid white;
+                margin-bottom: 15px;
+            }
+
+            nav a {
+                width: 100%;
+                color: #fff;
+                text-decoration: none;
+                margin-bottom: 10px;
+                padding: 8px;
+                border-radius: 4px;
+                transition: background-color 0.3s;
+            }
+
+            nav a:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+
+            main {
+                flex: 1;
+                padding: 20px;
+            }
+
+            section {
+                background-color: #fff;
+                padding: 2rem;
+                margin-bottom: 1rem;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            section h2 {
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            article {
+                margin-bottom: 1.5rem;
+            }
+
+            article h3 {
+                margin-bottom: 0.5rem;
+            }
+
+            .periodo {
+                font-style: italic;
+                color: #777;
+                margin-bottom: 1rem;
+            }
+
+            ul {
+                list-style-type: square;
+                margin-left: 2rem;
+            }
+
+            footer {
+                text-align: center;
+                padding: 1rem 0;
+                background-color: #ddd;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <div class="profile-container">
+                <img
+                    src="https://media.licdn.com/dms/image/v2/D4D03AQHd5VMCPDfDAQ/profile-displayphoto-shrink_800_800/B4DZUpCbXGHkAc-/0/1740150257521?e=1747267200&v=beta&t=HaMzatmkW9tMZO0ednQwyth1pcs6WbWDdWwflTizdoE"
+                    alt="Foto de Perfil"
+                    class="profile-img"
+                />
+                <h3>Marco Giampietro</h3>
+                <p>MBA em Data Science</p>
+                <p>Campinas - SP</p>
+                <p>(19) 98420-1111</p>
+            </div>
+        </nav>
+
+        <main>
+            <section id="sobre">
+                <h2>Sobre Mim</h2>
+                <p>
+                    🤓 Sou um entusiasta da tecnologia apaixonado por aprender e desenvolver soluções inovadoras que impulsionam a tomada de decisão baseada em dados.
+                </p>
+                <p>
+                    📊 Minha especialidade é a construção de ambientes OLAP, utilizando as melhores ferramentas do mercado conforme os princípios da Modern Data Stack.
+                </p>
+
+                <p>
+                    💡 Sempre buscando novos desafios, novas tecnologias e maneiras de tornar os dados mais acessíveis e estratégicos para as empresas. Se precisar de um profissional para construção de ambientes de dados, consultoria em BI
+                    ou desenvolvimento de soluções personalizadas, entre em contato!
+                </p>
+                <p>📩 Vamos conversar!</p>
+            </section>
+            <section>
+                <h2>Conhecimentos</h2>
+                <div class="cards-container">
+                    <!-- Card 1 -->
+                    <div class="skill-card">
+                        <div class="card-header">
+                            <span class="check">✅</span>
+                            <h3>Engenharia de Dados & ETL</h3>
+                        </div>
+                        <ul class="card-list">
+                            <p>🔹 Desenvolvimento de pipelines eficientes com Airflow</p>
+                            <p>🔹 ETL com ferramentas modernas e escaláveis</p>
+                        </ul>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="skill-card">
+                        <div class="card-header">
+                            <span class="check">✅</span>
+                            <h3>Bancos de Dados & Armazenamento</h3>
+                        </div>
+                        <ul class="card-list">
+                            <p>🔹 Bancos SQL (MSSQL, PostgreSQL, MySQL)</p>
+                            <p>🔹 NoSQL (MongoDB)</p>
+                            <p>🔹 Implementação de Lakehouse com MinIO, S3, Azure</p>
+                        </ul>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="skill-card">
+                        <div class="card-header">
+                            <span class="check">✅</span>
+                            <h3>Programação & APIs</h3>
+                        </div>
+                        <ul class="card-list">
+                            <p>🔹 Python para automação e análise</p>
+                            <p>🔹 APIs REST com FastAPI</p>
+                            <p>🔹 Integração de sistemas com REST APIs</p>
+                        </ul>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="skill-card">
+                        <div class="card-header">
+                            <span class="check">✅</span>
+                            <h3>Infraestrutura & DevOps</h3>
+                        </div>
+                        <ul class="card-list">
+                            <p>🔹 Docker & Docker-Compose</p>
+                            <p>🔹 Controle de versão com Git/GitHub</p>
+                        </ul>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="skill-card">
+                        <div class="card-header">
+                            <span class="check">✅</span>
+                            <h3>BI & Data Visualization</h3>
+                        </div>
+                        <ul class="card-list">
+                            <p>🔹 Dashboards em Power BI, Metabase</p>
+                            <p>🔹 Modelagem de dados com Excel</p>
+                        </ul>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="skill-card">
+                        <div class="card-header">
+                            <span class="check">✅</span>
+                            <h3>WebApp & Marketing Digital</h3>
+                        </div>
+                        <ul class="card-list">
+                            <p>🔹 Sites responsivos em Streamlit</p>
+                            <p>🔹 Google Analytics</p>
+                            <p>🔹 Google Ads</p>
+                            <p>🔹 Conhecimentos básicos em frontend</p>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <h2>Experiência</h2>
+                <h3>Fitcard</h3>
+                <b>Analista de BI Senior</b>
+                <p>De jul de 2020 até o momento</p>
+                <p>Campinas, São Paulo, Brasil</p>
+
+                <h3>Navegar</h3>
+                <b>Analista de BI Pleno</b>
+                <p>De out de 2016 até jul de 2020 · 3 anos 10 meses</p>
+                <p>Campinas, São Paulo, Brasil</p>
+                <b>Analista de suporte</b>
+                <p>De mar de 2018 até ago de 2019 · 1 ano 6 meses</p>
+                <p>Campinas, São Paulo, Brasil</p>
+
+                <h3>Hospital Vera Cruz</h3> 
+                <b>Consultor de BI</b>
+                <p>De ago de 2019 até nov de 2019 · 4 meses</p>
+                <p>Campinas, São Paulo, Brasil</p>
+
+                <h3>Merial</h3>
+                <b>Analista de BI Junior</b>
+                <p>De jul de 2012 até out de 2016 · 4 anos 4 meses</p>
+                <p>Campinas, São Paulo, Brasil</p>
+
+                <h3>ITYour's</h3>
+                <b>Desenvolvedor .Net</b>
+                <p>De dez de 2010 até jun de 2012 · 1 ano 7 meses</p>
+                <p>Campinas, São Paulo, Brasil</p>
+            </section>
+            <footer>
+                <p>LinkedIn: <a href="https://www.linkedin.com/in/marco-giampietro/">linkedin.com/in/marco-giampietro/</a></p>
+            </footer>
+        </main>
+    </body>
+</html>
