@@ -699,133 +699,175 @@
         .export-btn:hover { background: var(--primary-dark); }
         .export-btn svg { width: 15px; height: 15px; }
 
-        /* ===== PRINT HEADER (oculto na tela, visível no PDF) ===== */
-        .print-header { display: none; }
+        /* ===== PDF LAYOUT (oculto na tela) ===== */
+        .pdf-body { display: none; }
 
         /* ===== PRINT / PDF ===== */
         @media print {
-            @page { margin: 1.5cm 1.8cm; }
+            @page { margin: 1.6cm 2cm; size: A4; }
 
-            .export-btn,
-            .hamburger,
-            .sidebar-toggle,
-            .overlay,
-            nav,
-            footer { display: none !important; }
+            /* Oculta todo o site */
+            nav, main, .hamburger, .overlay, .export-btn, .sidebar-toggle { display: none !important; }
 
-            body {
+            body { display: block; background: white; margin: 0; padding: 0; }
+
+            /* Mostra o layout dedicado ao PDF */
+            .pdf-body {
                 display: block;
-                background: white;
-                font-size: 11pt;
-                color: #000;
+                font-family: 'Inter', sans-serif;
+                font-size: 9.5pt;
+                color: #111;
+                line-height: 1.5;
             }
 
-            main {
-                padding: 0;
+            .pdf-header {
+                text-align: center;
+                padding-bottom: 9pt;
+                margin-bottom: 11pt;
+                border-bottom: 1.5pt solid #0077b5;
             }
 
-            /* Cabeçalho impresso */
-            .print-header {
-                display: block;
-                border-bottom: 2px solid #0077b5;
-                padding-bottom: 10pt;
-                margin-bottom: 14pt;
-            }
-
-            .print-header h1 {
-                font-size: 18pt;
+            .pdf-header h1 {
+                font-size: 19pt;
                 font-weight: 700;
                 color: #0f172a;
-                margin-bottom: 3pt;
+                margin: 0 0 2pt 0;
+                letter-spacing: -0.3px;
             }
 
-            .print-header .ph-title {
-                font-size: 11pt;
+            .pdf-role {
+                font-size: 10.5pt;
                 color: #0077b5;
                 font-weight: 600;
-                margin-bottom: 4pt;
+                margin: 0 0 4pt 0;
             }
 
-            .print-header .ph-contact {
+            .pdf-contact {
+                font-size: 8.5pt;
+                color: #555;
+                margin: 0;
+            }
+
+            .pdf-section {
+                margin-bottom: 9pt;
+                page-break-inside: avoid;
+            }
+
+            .pdf-section-title {
+                font-size: 7.5pt;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.1em;
+                color: #0077b5;
+                border-bottom: 0.75pt solid #0077b5;
+                padding-bottom: 2.5pt;
+                margin: 0 0 6pt 0;
+            }
+
+            .pdf-section p {
                 font-size: 9pt;
-                color: #444;
+                color: #222;
+                margin: 0 0 3.5pt 0;
+                line-height: 1.55;
             }
-
-            section {
-                box-shadow: none !important;
-                border: none !important;
-                border-radius: 0 !important;
-                padding: 10pt 0 !important;
-                margin-bottom: 0 !important;
-                border-bottom: 1px solid #e2e8f0 !important;
-                page-break-inside: avoid;
-            }
-
-            section:last-of-type { border-bottom: none !important; }
-
-            .section-header {
-                border-bottom: 1px solid #0077b5 !important;
-                padding-bottom: 4pt !important;
-                margin-bottom: 8pt !important;
-            }
-
-            section h2 {
-                font-size: 9pt !important;
-                color: #0077b5 !important;
-            }
-
-            .section-header svg { display: none; }
-
-            /* Skills em 2 colunas no PDF */
-            .cards-container {
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 8pt !important;
-            }
-
-            .skill-card {
-                box-shadow: none !important;
-                border: 1px solid #e2e8f0 !important;
-                padding: 7pt !important;
-                page-break-inside: avoid;
-            }
-
-            .card-header {
-                padding-bottom: 5pt !important;
-                margin-bottom: 5pt !important;
-            }
-
-            .card-header svg { display: none; }
-
-            .card-header h3 { font-size: 9pt !important; }
-            .card-list li { font-size: 9pt !important; padding: 2px 0 !important; }
 
             /* Experience */
-            .company-block { page-break-inside: avoid; margin-bottom: 10pt !important; }
-            .company-name { font-size: 9pt !important; }
-            .company-name svg { display: none; }
-            .job-title { font-size: 10pt !important; }
-            .job-period, .job-location { font-size: 8.5pt !important; }
-            .job-desc li { font-size: 9pt !important; }
-            .job-tag { font-size: 7.5pt !important; }
+            .pdf-company { margin-bottom: 7pt; page-break-inside: avoid; }
 
-            /* Education & Courses */
-            .edu-item {
-                border: none !important;
-                padding: 5pt 0 !important;
-                page-break-inside: avoid;
+            .pdf-company-name {
+                font-size: 9pt;
+                font-weight: 700;
+                color: #0f172a;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin: 0 0 3pt 0;
             }
 
-            .edu-item svg { display: none; }
-            .edu-details h3 { font-size: 10pt !important; }
-            .edu-link { border: 1px solid #ccc !important; font-size: 8pt !important; }
+            .pdf-job { margin-bottom: 4pt; padding-left: 7pt; page-break-inside: avoid; }
 
-            .courses-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 5pt !important; }
-            .course-item { border: 1px solid #e2e8f0 !important; padding: 5pt 7pt !important; page-break-inside: avoid; }
-            .course-name { font-size: 9pt !important; }
-            .course-link { font-size: 8pt !important; border: 1px solid #ccc !important; }
+            .pdf-job-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+                margin-bottom: 1.5pt;
+            }
 
-            /* Sobre Mim */
-            #sobre p { font-size: 10pt !important; margin-bottom: 5pt !important; }
+            .pdf-job-title { font-size: 9.5pt; font-weight: 600; color: #0f172a; }
+            .pdf-job-period { font-size: 8pt; color: #666; white-space: nowrap; margin-left: 8pt; }
+
+            .pdf-job-tag {
+                font-size: 7pt;
+                color: #777;
+                border: 0.5pt solid #bbb;
+                padding: 0 3pt;
+                margin-left: 4pt;
+                border-radius: 1pt;
+                font-weight: 500;
+            }
+
+            .pdf-job ul {
+                margin: 2pt 0 2pt 10pt;
+                padding: 0;
+                list-style-type: disc;
+            }
+
+            .pdf-job ul li { font-size: 8.5pt; color: #333; margin-bottom: 1.5pt; line-height: 1.45; }
+
+            /* Skills */
+            .pdf-skills {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 5pt 16pt;
+            }
+
+            .pdf-skill-block { page-break-inside: avoid; }
+
+            .pdf-skill-block strong {
+                font-size: 8.5pt;
+                font-weight: 700;
+                color: #0f172a;
+                display: block;
+                margin-bottom: 1pt;
+            }
+
+            .pdf-skill-block span { font-size: 8pt; color: #555; line-height: 1.4; }
+
+            /* Education */
+            .pdf-edu-item { margin-bottom: 5pt; page-break-inside: avoid; }
+
+            .pdf-edu-item strong { font-size: 9.5pt; color: #0f172a; font-weight: 600; }
+
+            .pdf-edu-meta { font-size: 8pt; color: #666; margin-top: 1pt; }
+
+            .pdf-edu-badge {
+                font-size: 6.5pt;
+                font-weight: 700;
+                color: #0077b5;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                border: 0.5pt solid #0077b5;
+                padding: 0.5pt 3pt;
+                margin-left: 4pt;
+                border-radius: 1pt;
+                vertical-align: middle;
+            }
+
+            /* Courses */
+            .pdf-courses-list {
+                columns: 2;
+                column-gap: 14pt;
+                list-style-type: disc;
+                padding-left: 11pt;
+                margin: 0;
+            }
+
+            .pdf-courses-list li {
+                font-size: 8.5pt;
+                color: #333;
+                margin-bottom: 2pt;
+                break-inside: avoid;
+                line-height: 1.4;
+            }
         }
 
         /* ===== RESPONSIVE ===== */
@@ -935,15 +977,6 @@
     </nav>
 
     <main>
-
-        <!-- Cabeçalho visível apenas no PDF -->
-        <div class="print-header">
-            <h1>Marco Giampietro</h1>
-            <div class="ph-title">Especialista em BI & Dados</div>
-            <div class="ph-contact">
-                (19) 98420-1111 &nbsp;·&nbsp; marco.giampietro@outlook.com.br &nbsp;·&nbsp; linkedin.com/in/marco-giampietro &nbsp;·&nbsp; Campinas, SP
-            </div>
-        </div>
 
         <section id="sobre">
             <div class="section-header">
@@ -1261,6 +1294,173 @@
         </footer>
 
     </main>
+
+    <!-- Layout dedicado ao PDF — oculto na tela, visível apenas na impressão -->
+    <div class="pdf-body">
+
+        <div class="pdf-header">
+            <h1>Marco Giampietro</h1>
+            <p class="pdf-role">Especialista em BI & Dados</p>
+            <p class="pdf-contact">(19) 98420-1111 &nbsp;·&nbsp; marco.giampietro@outlook.com.br &nbsp;·&nbsp; linkedin.com/in/marco-giampietro &nbsp;·&nbsp; Campinas, SP</p>
+        </div>
+
+        <div class="pdf-section">
+            <div class="pdf-section-title">Sobre Mim</div>
+            <p>Com mais de 14 anos de atuação na área de dados, atuo como Especialista em BI na Fitcard Tech, onde lidero o desenvolvimento da infraestrutura analítica e a implantação da cultura data-driven na organização.</p>
+            <p>Tenho sólida experiência em engenharia de dados, modelagem dimensional, desenvolvimento de pipelines e criação de soluções de Business Intelligence que suportam decisões táticas, operacionais e estratégicas. Especializado em Modern Data Stack e ambientes OLAP, atuo desde a ingestão e transformação dos dados até a entrega de dashboards executivos e ferramentas de governança.</p>
+        </div>
+
+        <div class="pdf-section">
+            <div class="pdf-section-title">Experiência Profissional</div>
+
+            <div class="pdf-company">
+                <div class="pdf-company-name">Fitcard Tech</div>
+                <div class="pdf-job">
+                    <div class="pdf-job-header">
+                        <span class="pdf-job-title">Especialista em BI</span>
+                        <span class="pdf-job-period">Jun 2025 – presente · Campinas, SP</span>
+                    </div>
+                    <ul>
+                        <li>Liderança no desenvolvimento da área de dados e implantação da cultura data-driven na organização</li>
+                        <li>Implantação do Portal BI com relatórios táticos e operacionais, gerando redução de custos de licenciamento do Power BI Pro</li>
+                        <li>Desenvolvimento de solução de BI exclusiva para a diretoria, com indicadores e relatórios estratégicos</li>
+                        <li>Criação de API de dados para integração e consumo de informações entre sistemas</li>
+                        <li>Implantação do DataHub como ferramenta interna de governança de dados</li>
+                    </ul>
+                </div>
+                <div class="pdf-job">
+                    <div class="pdf-job-header">
+                        <span class="pdf-job-title">Analista de BI Sênior</span>
+                        <span class="pdf-job-period">Jul 2020 – Mai 2025 · 4 anos 11 meses · Campinas, SP</span>
+                    </div>
+                    <ul>
+                        <li>Estruturação da área de BI da empresa com desenvolvimento dos primeiros relatórios em Power BI</li>
+                        <li>Participação ativa na concepção e implantação do Portal BI e do DataHub para suporte à governança de dados</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-company">
+                <div class="pdf-company-name">Navegar TI</div>
+                <div class="pdf-job">
+                    <div class="pdf-job-header">
+                        <span class="pdf-job-title">Analista de BI Pleno</span>
+                        <span class="pdf-job-period">Out 2016 – Jul 2020 · 3 anos 10 meses · Campinas, SP</span>
+                    </div>
+                    <ul>
+                        <li>Desenvolvimento de relatórios analíticos em QlikSense e Power BI para clientes atendidos pela consultoria</li>
+                    </ul>
+                </div>
+                <div class="pdf-job">
+                    <div class="pdf-job-header">
+                        <span class="pdf-job-title">Analista de Suporte <span class="pdf-job-tag">Acúmulo de função</span></span>
+                        <span class="pdf-job-period">Mar 2018 – Ago 2019 · 1 ano 6 meses</span>
+                    </div>
+                    <ul>
+                        <li>Atendimento de ponta a ponta, desde o refinamento de requisitos com o cliente até o desenvolvimento e entrega da solução, para demandas próprias e apoio aos demais colaboradores da empresa</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-company">
+                <div class="pdf-company-name">Hospital Vera Cruz</div>
+                <div class="pdf-job">
+                    <div class="pdf-job-header">
+                        <span class="pdf-job-title">Consultor de BI <span class="pdf-job-tag">Freelance</span></span>
+                        <span class="pdf-job-period">Ago 2019 – Nov 2019 · 4 meses · Campinas, SP</span>
+                    </div>
+                    <ul>
+                        <li>Consultoria para implantação de relatórios de BI no ambiente hospitalar</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-company">
+                <div class="pdf-company-name">Merial Saúde Animal Ltda</div>
+                <div class="pdf-job">
+                    <div class="pdf-job-header">
+                        <span class="pdf-job-title">Analista de BI Júnior</span>
+                        <span class="pdf-job-period">Jul 2012 – Out 2016 · 4 anos 4 meses · Campinas, SP</span>
+                    </div>
+                    <ul>
+                        <li>Desenvolvimento de relatórios analíticos em Excel com automação via Macros e VBA</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-company">
+                <div class="pdf-company-name">IT Your's</div>
+                <div class="pdf-job">
+                    <div class="pdf-job-header">
+                        <span class="pdf-job-title">Desenvolvedor .NET</span>
+                        <span class="pdf-job-period">Dez 2010 – Jun 2012 · 1 ano 7 meses · Campinas, SP</span>
+                    </div>
+                    <ul>
+                        <li>Primeiro contato com programação, desenvolvendo aplicações com C#, VB.NET e SQL Server</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="pdf-section">
+            <div class="pdf-section-title">Formação Acadêmica</div>
+            <div class="pdf-edu-item">
+                <strong>Pós-Graduação em Engenharia e Arquitetura de Dados com IA <span class="pdf-edu-badge">Cursando</span></strong>
+                <div class="pdf-edu-meta">XP Educação · Previsão de conclusão: 2027</div>
+            </div>
+            <div class="pdf-edu-item">
+                <strong>MBA em Data Science</strong>
+                <div class="pdf-edu-meta">Wyden / Metrocamp · Concluído em 2021</div>
+            </div>
+            <div class="pdf-edu-item">
+                <strong>Análise e Desenvolvimento de Sistemas</strong>
+                <div class="pdf-edu-meta">UNIP · Concluído em 2020</div>
+            </div>
+        </div>
+
+        <div class="pdf-section">
+            <div class="pdf-section-title">Conhecimentos</div>
+            <div class="pdf-skills">
+                <div class="pdf-skill-block">
+                    <strong>Engenharia de Dados & ETL</strong>
+                    <span>Apache Airflow, dbt, Python, automação de pipelines</span>
+                </div>
+                <div class="pdf-skill-block">
+                    <strong>Bancos de Dados & Armazenamento</strong>
+                    <span>MSSQL, PostgreSQL, MySQL, MongoDB, Lakehouse (MinIO, S3, Azure)</span>
+                </div>
+                <div class="pdf-skill-block">
+                    <strong>Programação & APIs</strong>
+                    <span>Python, FastAPI, integração via REST APIs</span>
+                </div>
+                <div class="pdf-skill-block">
+                    <strong>Infraestrutura & DevOps</strong>
+                    <span>Docker, Docker-Compose, Git, GitHub</span>
+                </div>
+                <div class="pdf-skill-block">
+                    <strong>BI & Data Visualization</strong>
+                    <span>Power BI, Metabase, Streamlit, modelagem dimensional (Star Schema, Snowflake)</span>
+                </div>
+                <div class="pdf-skill-block">
+                    <strong>Desenvolvimento & Analytics</strong>
+                    <span>Streamlit, Google Analytics, HTML, CSS, JavaScript</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="pdf-section">
+            <div class="pdf-section-title">Cursos Extracurriculares</div>
+            <ul class="pdf-courses-list">
+                <li>Programa de Melhoria de Processos – Fitcard Tech</li>
+                <li>Pipeline ETL com Python – Validando dados e planilhas Excel</li>
+                <li>Python Fundamentos Para Análise de Dados 3.0</li>
+                <li>Big Data Fundamentos 2.0</li>
+                <li>Introdução à Ciência de Dados 2.0</li>
+                <li>Microsoft Power BI Para Data Science, Versão 2.0</li>
+            </ul>
+        </div>
+
+    </div>
 
     <button class="export-btn" onclick="window.print()" aria-label="Exportar como PDF">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
