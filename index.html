@@ -673,6 +673,161 @@
             color: #94a3b8;
         }
 
+        /* ===== EXPORT BUTTON ===== */
+        .export-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 0.83rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: var(--shadow-md);
+            z-index: 50;
+            transition: background var(--transition);
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.01em;
+        }
+
+        .export-btn:hover { background: var(--primary-dark); }
+        .export-btn svg { width: 15px; height: 15px; }
+
+        /* ===== PRINT HEADER (oculto na tela, visível no PDF) ===== */
+        .print-header { display: none; }
+
+        /* ===== PRINT / PDF ===== */
+        @media print {
+            @page { margin: 1.5cm 1.8cm; }
+
+            .export-btn,
+            .hamburger,
+            .sidebar-toggle,
+            .overlay,
+            nav,
+            footer { display: none !important; }
+
+            body {
+                display: block;
+                background: white;
+                font-size: 11pt;
+                color: #000;
+            }
+
+            main {
+                padding: 0;
+            }
+
+            /* Cabeçalho impresso */
+            .print-header {
+                display: block;
+                border-bottom: 2px solid #0077b5;
+                padding-bottom: 10pt;
+                margin-bottom: 14pt;
+            }
+
+            .print-header h1 {
+                font-size: 18pt;
+                font-weight: 700;
+                color: #0f172a;
+                margin-bottom: 3pt;
+            }
+
+            .print-header .ph-title {
+                font-size: 11pt;
+                color: #0077b5;
+                font-weight: 600;
+                margin-bottom: 4pt;
+            }
+
+            .print-header .ph-contact {
+                font-size: 9pt;
+                color: #444;
+            }
+
+            section {
+                box-shadow: none !important;
+                border: none !important;
+                border-radius: 0 !important;
+                padding: 10pt 0 !important;
+                margin-bottom: 0 !important;
+                border-bottom: 1px solid #e2e8f0 !important;
+                page-break-inside: avoid;
+            }
+
+            section:last-of-type { border-bottom: none !important; }
+
+            .section-header {
+                border-bottom: 1px solid #0077b5 !important;
+                padding-bottom: 4pt !important;
+                margin-bottom: 8pt !important;
+            }
+
+            section h2 {
+                font-size: 9pt !important;
+                color: #0077b5 !important;
+            }
+
+            .section-header svg { display: none; }
+
+            /* Skills em 2 colunas no PDF */
+            .cards-container {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 8pt !important;
+            }
+
+            .skill-card {
+                box-shadow: none !important;
+                border: 1px solid #e2e8f0 !important;
+                padding: 7pt !important;
+                page-break-inside: avoid;
+            }
+
+            .card-header {
+                padding-bottom: 5pt !important;
+                margin-bottom: 5pt !important;
+            }
+
+            .card-header svg { display: none; }
+
+            .card-header h3 { font-size: 9pt !important; }
+            .card-list li { font-size: 9pt !important; padding: 2px 0 !important; }
+
+            /* Experience */
+            .company-block { page-break-inside: avoid; margin-bottom: 10pt !important; }
+            .company-name { font-size: 9pt !important; }
+            .company-name svg { display: none; }
+            .job-title { font-size: 10pt !important; }
+            .job-period, .job-location { font-size: 8.5pt !important; }
+            .job-desc li { font-size: 9pt !important; }
+            .job-tag { font-size: 7.5pt !important; }
+
+            /* Education & Courses */
+            .edu-item {
+                border: none !important;
+                padding: 5pt 0 !important;
+                page-break-inside: avoid;
+            }
+
+            .edu-item svg { display: none; }
+            .edu-details h3 { font-size: 10pt !important; }
+            .edu-link { border: 1px solid #ccc !important; font-size: 8pt !important; }
+
+            .courses-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 5pt !important; }
+            .course-item { border: 1px solid #e2e8f0 !important; padding: 5pt 7pt !important; page-break-inside: avoid; }
+            .course-name { font-size: 9pt !important; }
+            .course-link { font-size: 8pt !important; border: 1px solid #ccc !important; }
+
+            /* Sobre Mim */
+            #sobre p { font-size: 10pt !important; margin-bottom: 5pt !important; }
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             body { display: block; }
@@ -780,6 +935,15 @@
     </nav>
 
     <main>
+
+        <!-- Cabeçalho visível apenas no PDF -->
+        <div class="print-header">
+            <h1>Marco Giampietro</h1>
+            <div class="ph-title">Especialista em BI & Dados</div>
+            <div class="ph-contact">
+                (19) 98420-1111 &nbsp;·&nbsp; marco.giampietro@outlook.com.br &nbsp;·&nbsp; linkedin.com/in/marco-giampietro &nbsp;·&nbsp; Campinas, SP
+            </div>
+        </div>
 
         <section id="sobre">
             <div class="section-header">
@@ -1097,6 +1261,11 @@
         </footer>
 
     </main>
+
+    <button class="export-btn" onclick="window.print()" aria-label="Exportar como PDF">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Exportar PDF
+    </button>
 
     <script>
         const hamburger = document.getElementById('hamburger');
