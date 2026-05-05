@@ -86,12 +86,36 @@
             opacity: 1;
         }
 
+        /* ===== SIDEBAR TOGGLE BUTTON ===== */
+        .sidebar-toggle {
+            align-self: flex-end;
+            background: rgba(255,255,255,0.18);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+            flex-shrink: 0;
+            transition: background var(--transition), transform var(--transition);
+        }
+
+        .sidebar-toggle:hover {
+            background: rgba(255,255,255,0.32);
+        }
+
         /* ===== SIDEBAR NAV ===== */
         nav {
             width: var(--nav-width);
             background: linear-gradient(165deg, #004f80 0%, #0077b5 55%, #0096d6 100%);
             color: #fff;
-            padding: 2rem 1.5rem;
+            padding: 1.25rem 1.5rem;
             height: 100vh;
             position: sticky;
             top: 0;
@@ -99,9 +123,62 @@
             flex-direction: column;
             align-items: center;
             overflow-y: auto;
+            overflow-x: hidden;
             flex-shrink: 0;
             z-index: 100;
-            transition: transform var(--transition);
+            transition: width var(--transition), padding var(--transition), transform var(--transition);
+        }
+
+        /* ===== COLLAPSED STATE (desktop only) ===== */
+        nav.collapsed {
+            width: 64px;
+            padding: 1.25rem 0.5rem;
+        }
+
+        nav.collapsed .sidebar-toggle {
+            transform: rotate(180deg);
+            align-self: center;
+        }
+
+        nav.collapsed .profile-container h2,
+        nav.collapsed .profile-container .title,
+        nav.collapsed .profile-container .location,
+        nav.collapsed .contact-info,
+        nav.collapsed hr,
+        nav.collapsed .nav-label {
+            display: none;
+        }
+
+        nav.collapsed .profile-img {
+            width: 42px;
+            height: 42px;
+            margin-bottom: 0;
+        }
+
+        nav.collapsed .profile-container {
+            margin-bottom: 0.75rem;
+        }
+
+        nav.collapsed .nav-links a {
+            justify-content: center;
+            padding: 10px 6px;
+        }
+
+        nav.collapsed .nav-links a[title]:hover::after {
+            content: attr(title);
+            position: absolute;
+            left: 70px;
+            background: rgba(0,0,0,0.75);
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        nav.collapsed .nav-links a {
+            position: relative;
         }
 
         .profile-container {
@@ -195,11 +272,23 @@
             font-weight: 500;
             transition: background var(--transition), color var(--transition);
             margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
         }
 
         .nav-links a:hover {
             background: rgba(255,255,255,0.22);
             color: #fff;
+        }
+
+        .nav-icon {
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+
+        .nav-label {
+            overflow: hidden;
+            transition: opacity var(--transition);
         }
 
         /* ===== MAIN CONTENT ===== */
@@ -544,17 +633,43 @@
                 display: block;
             }
 
+            .sidebar-toggle {
+                display: none;
+            }
+
             nav {
                 position: fixed;
                 top: 0;
                 left: 0;
+                width: var(--nav-width) !important;
                 height: 100vh;
                 transform: translateX(-100%);
                 z-index: 100;
+                padding: 1.25rem 1.5rem !important;
             }
 
             nav.open {
                 transform: translateX(0);
+            }
+
+            /* reset collapsed styles on mobile */
+            nav.collapsed .profile-container h2,
+            nav.collapsed .profile-container .title,
+            nav.collapsed .profile-container .location,
+            nav.collapsed .contact-info,
+            nav.collapsed hr,
+            nav.collapsed .nav-label {
+                display: revert;
+            }
+
+            nav.collapsed .profile-img {
+                width: 130px;
+                height: 130px;
+            }
+
+            nav.collapsed .nav-links a {
+                justify-content: flex-start;
+                padding: 9px 12px;
             }
 
             main {
@@ -624,6 +739,8 @@
 
     <!-- Sidebar Navigation -->
     <nav id="sidebar">
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Recolher menu">&#8249;</button>
+
         <div class="profile-container">
             <img
                 src="https://github.com/mgiampietrojr/profile/blob/main/foto.jpeg?raw=true"
@@ -649,11 +766,11 @@
         </div>
 
         <div class="nav-links">
-            <a href="#sobre">👤 Sobre Mim</a>
-            <a href="#conhecimentos">💡 Conhecimentos</a>
-            <a href="#experiencia">💼 Experiência</a>
-            <a href="#formacao">🎓 Formação</a>
-            <a href="#cursos">📚 Cursos</a>
+            <a href="#sobre" title="Sobre Mim"><span class="nav-icon">👤</span><span class="nav-label">Sobre Mim</span></a>
+            <a href="#conhecimentos" title="Conhecimentos"><span class="nav-icon">💡</span><span class="nav-label">Conhecimentos</span></a>
+            <a href="#experiencia" title="Experiência"><span class="nav-icon">💼</span><span class="nav-label">Experiência</span></a>
+            <a href="#formacao" title="Formação"><span class="nav-icon">🎓</span><span class="nav-label">Formação</span></a>
+            <a href="#cursos" title="Cursos"><span class="nav-icon">📚</span><span class="nav-label">Cursos</span></a>
         </div>
     </nav>
 
@@ -949,21 +1066,28 @@
 
     <script>
         const hamburger = document.getElementById('hamburger');
+        const sidebarToggle = document.getElementById('sidebarToggle');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
 
-        function toggleMenu() {
+        // Mobile: hamburger open/close
+        function toggleMobileMenu() {
             const isOpen = sidebar.classList.toggle('open');
             overlay.classList.toggle('active', isOpen);
         }
 
-        hamburger.addEventListener('click', toggleMenu);
-        overlay.addEventListener('click', toggleMenu);
+        hamburger.addEventListener('click', toggleMobileMenu);
+        overlay.addEventListener('click', toggleMobileMenu);
 
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) toggleMenu();
+                if (window.innerWidth <= 768) toggleMobileMenu();
             });
+        });
+
+        // Desktop: sidebar collapse/expand
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
         });
     </script>
 
