@@ -1,337 +1,962 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Marco Giampietro - Perfil</title>
-        <style>
-            .cards-container {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-                gap: 20px;
-                margin: 20px 0;
-            }
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marco Giampietro - Currículo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0077b5;
+            --primary-dark: #005885;
+            --primary-light: #e8f4fd;
+            --accent: #00a0dc;
+            --text: #1a1a2e;
+            --text-light: #6b7280;
+            --bg: #f0f4f8;
+            --surface: #ffffff;
+            --border: #e5e7eb;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            --radius: 12px;
+            --nav-width: 260px;
+            --transition: 0.3s ease;
+        }
 
-            .skill-card {
-                background: #fff;
-                border-radius: 10px;
-                padding: 20px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                transition: transform 0.3s ease;
-            }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-            .skill-card:hover {
-                transform: translateY(-5px);
-            }
+        html {
+            scroll-behavior: smooth;
+        }
 
-            .card-header {
-                display: flex;
-                align-items: center;
-                margin-bottom: 15px;
-                border-bottom: 2px solid #0077b5;
-                padding-bottom: 10px;
-            }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+        }
 
-            .check {
-                font-size: 1.5rem;
-                margin-right: 10px;
-            }
+        /* ===== HAMBURGER BUTTON ===== */
+        .hamburger {
+            display: none;
+            position: fixed;
+            top: 14px;
+            left: 14px;
+            z-index: 200;
+            background: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 11px;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+            box-shadow: var(--shadow);
+        }
 
-            .card-header h3 {
-                margin: 0;
-                color: #0077b5;
-            }
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: white;
+            border-radius: 2px;
+            transition: var(--transition);
+        }
 
-            .card-list {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
+        /* ===== OVERLAY ===== */
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 99;
+            opacity: 0;
+            transition: opacity var(--transition);
+        }
 
-            .card-list li {
-                padding: 8px 0;
-                display: flex;
-                align-items: center;
-            }
+        .overlay.active {
+            opacity: 1;
+        }
 
-            .card-list li::before {
-                content: "🔹";
-                margin-right: 10px;
-                font-size: 0.8rem;
-            }
+        /* ===== SIDEBAR NAV ===== */
+        nav {
+            width: var(--nav-width);
+            background: linear-gradient(165deg, #004f80 0%, #0077b5 55%, #0096d6 100%);
+            color: #fff;
+            padding: 2rem 1.5rem;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto;
+            flex-shrink: 0;
+            z-index: 100;
+            transition: transform var(--transition);
+        }
+
+        .profile-container {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        .profile-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255,255,255,0.85);
+            margin-bottom: 1rem;
+            box-shadow: 0 0 0 6px rgba(255,255,255,0.15);
+        }
+
+        .profile-container h2 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.2px;
+        }
+
+        .profile-container .title {
+            font-size: 0.78rem;
+            opacity: 0.9;
+            background: rgba(255,255,255,0.18);
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 0.4rem;
+        }
+
+        .profile-container .location {
+            font-size: 0.8rem;
+            opacity: 0.75;
+            margin-top: 0.2rem;
+        }
+
+        nav hr {
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            margin: 1rem 0;
+            width: 100%;
+        }
+
+        .contact-info {
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-bottom: 0.55rem;
+            word-break: break-all;
+        }
+
+        .contact-item .icon {
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        .nav-links {
+            width: 100%;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            padding: 9px 12px;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: background var(--transition), color var(--transition);
+            margin-bottom: 3px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.22);
+            color: #fff;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        main {
+            flex: 1;
+            padding: 2rem;
+            min-width: 0;
+        }
+
+        section {
+            background: var(--surface);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.9rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .section-icon {
+            font-size: 1.3rem;
+        }
+
+        section h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* ===== SOBRE MIM ===== */
+        #sobre p {
+            margin-bottom: 0.75rem;
+            color: #374151;
+            font-size: 0.95rem;
+        }
+
+        #sobre p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ===== SKILL CARDS ===== */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-card {
+            background: var(--surface);
+            border-radius: 10px;
+            padding: 1.25rem;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: transform var(--transition), box-shadow var(--transition);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .card-header h3 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .check {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .card-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .card-list li {
+            padding: 5px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.875rem;
+            color: #4b5563;
+        }
+
+        .card-list li::before {
+            content: "▸";
+            color: var(--primary);
+            font-size: 0.78rem;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        /* ===== EXPERIENCE TIMELINE ===== */
+        .company-block {
+            margin-bottom: 2rem;
+        }
+
+        .company-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .company-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.85rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .company-divider {
+            height: 2px;
+            flex: 1;
+            background: linear-gradient(to right, var(--primary-light), transparent);
+            border-radius: 2px;
+        }
+
+        .job-entries {
+            padding-left: 0.5rem;
+            border-left: 3px solid var(--primary-light);
+            margin-left: 0.75rem;
+        }
+
+        .job-entry {
+            position: relative;
+            padding: 0.65rem 0 0.65rem 1.5rem;
+        }
+
+        .job-entry::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 11px;
+            height: 11px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 0 2px var(--primary-light);
+        }
+
+        .job-title {
+            font-weight: 600;
+            font-size: 0.92rem;
+            color: var(--text);
+            margin-bottom: 0.2rem;
+        }
+
+        .job-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            align-items: center;
+        }
+
+        .job-period {
+            font-size: 0.78rem;
+            color: var(--text-light);
+            background: var(--bg);
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+
+        .job-location {
+            font-size: 0.78rem;
+            color: var(--text-light);
+        }
+
+        /* ===== EDUCATION ===== */
+        .edu-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            transition: background var(--transition);
+        }
+
+        .edu-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .edu-item:hover {
+            background: var(--primary-light);
+        }
+
+        .edu-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .edu-details h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.4rem;
+        }
+
+        .edu-links {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .edu-link {
+            font-size: 0.78rem;
+            color: var(--primary);
+            text-decoration: none;
+            border: 1px solid var(--primary);
+            padding: 2px 10px;
+            border-radius: 20px;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        .edu-link:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ===== COURSES ===== */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 0.65rem;
+        }
+
+        .course-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: var(--bg);
+            border-radius: 8px;
+            gap: 1rem;
+            transition: background var(--transition);
+        }
+
+        .course-item:hover {
+            background: var(--primary-light);
+        }
+
+        .course-name {
+            font-size: 0.875rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .course-link {
+            font-size: 0.78rem;
+            color: var(--primary);
+            text-decoration: none;
+            border: 1px solid var(--primary);
+            padding: 2px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+            transition: background var(--transition), color var(--transition);
+            flex-shrink: 0;
+        }
+
+        .course-link:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .footer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 7px 18px;
+            border: 1.5px solid var(--primary);
+            border-radius: 20px;
+            transition: background var(--transition), color var(--transition);
+        }
+
+        .footer-link:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .footer-copy {
+            margin-top: 1rem;
+            font-size: 0.78rem;
+            color: var(--text-light);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
             body {
-                font-family: sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f4f4f4;
-                color: #333;
+                display: block;
+            }
+
+            .hamburger {
                 display: flex;
+            }
+
+            .overlay {
+                display: block;
             }
 
             nav {
-                width: 200px;
-                background-color: #0077b5;
-                color: #fff;
-                padding: 20px 20px 0 20px;
-                height: 100vh;
-                position: sticky;
+                position: fixed;
                 top: 0;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
+                left: 0;
+                height: 100vh;
+                transform: translateX(-100%);
+                z-index: 100;
             }
 
-            .profile-container {
-                text-align: center;
-                margin-bottom: 20px;
-            }
-
-            .profile-img {
-                width: 150px;
-                height: 150px;
-                border-radius: 50%;
-                object-fit: cover;
-                border: 3px solid white;
-                margin-bottom: 15px;
-            }
-
-            nav a {
-                width: 100%;
-                color: #fff;
-                text-decoration: none;
-                margin-bottom: 10px;
-                padding: 8px;
-                border-radius: 4px;
-                transition: background-color 0.3s;
-            }
-
-            nav a:hover {
-                background-color: rgba(255, 255, 255, 0.2);
+            nav.open {
+                transform: translateX(0);
             }
 
             main {
-                flex: 1;
-                padding: 20px;
+                padding: 1rem;
+                padding-top: 4rem;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
             }
 
             section {
-                background-color: #fff;
-                padding: 2rem;
-                margin-bottom: 1rem;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-
-            section h2 {
-                border-bottom: 1px solid #ddd;
-                padding-bottom: 1rem;
-                margin-bottom: 1rem;
-            }
-
-            article {
-                margin-bottom: 1.5rem;
-            }
-
-            article h3 {
-                margin-bottom: 0.5rem;
-            }
-
-            .periodo {
-                font-style: italic;
-                color: #777;
-                margin-bottom: 1rem;
-            }
-
-            ul {
-                list-style-type: square;
-                margin-left: 2rem;
+                padding: 1.25rem;
             }
 
             footer {
-                text-align: center;
-                padding: 1rem 0;
-                background-color: #ddd;
+                margin-bottom: 1rem;
             }
-        </style>
-    </head>
-    <body>
-        <nav>
-            <div class="profile-container">
-                <img
-                    src="https://github.com/mgiampietrojr/profile/blob/main/foto.jpeg?raw=true"
-                    alt="Foto de Perfil"
-                    class="profile-img"
-                />
-                <h3>Marco Giampietro</h3>
-                <p>MBA em Data Science</p>
-                <p>Campinas - SP</p>
-                <hr style="border: 1px solid #ffffff; margin: 20px 0;" />
-                <p>(19) 98420-1111</p>
-                <p>marco.giampietro@live.com</p>
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                width: 82vw;
+            }
+
+            .profile-img {
+                width: 100px;
+                height: 100px;
+            }
+
+            section h2 {
+                font-size: 1.05rem;
+            }
+
+            .job-meta {
+                flex-direction: column;
+                gap: 0.2rem;
+                align-items: flex-start;
+            }
+
+            .edu-item {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .company-name {
+                font-size: 0.88rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hamburger Button -->
+    <button class="hamburger" id="hamburger" aria-label="Abrir menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar">
+        <div class="profile-container">
+            <img
+                src="https://github.com/mgiampietrojr/profile/blob/main/foto.jpeg?raw=true"
+                alt="Foto de Perfil"
+                class="profile-img"
+            />
+            <h2>Marco Giampietro</h2>
+            <p class="title">MBA em Data Science</p>
+            <p class="location">📍 Campinas - SP</p>
+        </div>
+
+        <hr />
+
+        <div class="contact-info">
+            <div class="contact-item">
+                <span class="icon">📞</span>
+                <span>(19) 98420-1111</span>
             </div>
-        </nav>
+            <div class="contact-item">
+                <span class="icon">✉️</span>
+                <span>marco.giampietro@live.com</span>
+            </div>
+        </div>
 
-        <main>
-            <section id="sobre">
+        <div class="nav-links">
+            <a href="#sobre">👤 Sobre Mim</a>
+            <a href="#conhecimentos">💡 Conhecimentos</a>
+            <a href="#experiencia">💼 Experiência</a>
+            <a href="#formacao">🎓 Formação</a>
+            <a href="#cursos">📚 Cursos</a>
+        </div>
+    </nav>
+
+    <main>
+
+        <!-- Sobre Mim -->
+        <section id="sobre">
+            <div class="section-header">
+                <span class="section-icon">👤</span>
                 <h2>Sobre Mim</h2>
-                <p>
-                    🤓 Sou um entusiasta da tecnologia apaixonado por aprender e desenvolver soluções inovadoras que impulsionam a tomada de decisão baseada em dados.
-                </p>
-                <p>
-                    📊 Minha especialidade é a construção de ambientes OLAP, utilizando as melhores ferramentas do mercado conforme os princípios da Modern Data Stack.
-                </p>
+            </div>
+            <p>Sou um entusiasta da tecnologia apaixonado por aprender e desenvolver soluções inovadoras que impulsionam a tomada de decisão baseada em dados.</p>
+            <p>Minha especialidade é a construção de ambientes OLAP, utilizando as melhores ferramentas do mercado conforme os princípios da Modern Data Stack.</p>
+            <p>Sempre buscando novos desafios, novas tecnologias e maneiras de tornar os dados mais acessíveis e estratégicos para as empresas. Se precisar de um profissional para construção de ambientes de dados, consultoria em BI ou desenvolvimento de soluções personalizadas, entre em contato!</p>
+            <p><strong>Vamos conversar! 📩</strong></p>
+        </section>
 
-                <p>
-                    💡 Sempre buscando novos desafios, novas tecnologias e maneiras de tornar os dados mais acessíveis e estratégicos para as empresas. Se precisar de um profissional para construção de ambientes de dados, consultoria em BI
-                    ou desenvolvimento de soluções personalizadas, entre em contato!
-                </p>
-                <p>📩 Vamos conversar!</p>
-            </section>
-            <section>
+        <!-- Conhecimentos -->
+        <section id="conhecimentos">
+            <div class="section-header">
+                <span class="section-icon">💡</span>
                 <h2>Conhecimentos</h2>
-                <div class="cards-container">
-                    <!-- Card 1 -->
-                    <div class="skill-card">
-                        <div class="card-header">
-                            <span class="check">✅</span>
-                            <h3>Engenharia de Dados & ETL</h3>
-                        </div>
-                        <ul class="card-list">
-                            <p>🔹 Desenvolvimento de pipelines eficientes com Airflow</p>
-                            <p>🔹 ETL com ferramentas modernas e escaláveis</p>
-                        </ul>
-                    </div>
+            </div>
+            <div class="cards-container">
 
-                    <!-- Card 2 -->
-                    <div class="skill-card">
-                        <div class="card-header">
-                            <span class="check">✅</span>
-                            <h3>Bancos de Dados & Armazenamento</h3>
-                        </div>
-                        <ul class="card-list">
-                            <p>🔹 Bancos SQL (MSSQL, PostgreSQL, MySQL)</p>
-                            <p>🔹 NoSQL (MongoDB)</p>
-                            <p>🔹 Implementação de Lakehouse com MinIO, S3, Azure</p>
-                        </ul>
+                <div class="skill-card">
+                    <div class="card-header">
+                        <span class="check">⚙️</span>
+                        <h3>Engenharia de Dados & ETL</h3>
                     </div>
-
-                    <!-- Card 3 -->
-                    <div class="skill-card">
-                        <div class="card-header">
-                            <span class="check">✅</span>
-                            <h3>Programação & APIs</h3>
-                        </div>
-                        <ul class="card-list">
-                            <p>🔹 Python para automação e análise</p>
-                            <p>🔹 APIs REST com FastAPI</p>
-                            <p>🔹 Integração de sistemas com REST APIs</p>
-                        </ul>
-                    </div>
-
-                    <!-- Card 4 -->
-                    <div class="skill-card">
-                        <div class="card-header">
-                            <span class="check">✅</span>
-                            <h3>Infraestrutura & DevOps</h3>
-                        </div>
-                        <ul class="card-list">
-                            <p>🔹 Docker & Docker-Compose</p>
-                            <p>🔹 Controle de versão com Git/GitHub</p>
-                        </ul>
-                    </div>
-
-                    <!-- Card 5 -->
-                    <div class="skill-card">
-                        <div class="card-header">
-                            <span class="check">✅</span>
-                            <h3>BI & Data Visualization</h3>
-                        </div>
-                        <ul class="card-list">
-                            <p>🔹 Dashboards em Power BI, Metabase e Streamlit</p>
-                            <p>🔹 Modelagem de dados com Excel</p>
-                        </ul>
-                    </div>
-
-                    <!-- Card 6 -->
-                    <div class="skill-card">
-                        <div class="card-header">
-                            <span class="check">✅</span>
-                            <h3>WebApp & Marketing Digital</h3>
-                        </div>
-                        <ul class="card-list">
-                            <p>🔹 Sites responsivos em Streamlit</p>
-                            <p>🔹 Google Analytics</p>
-                            <p>🔹 Google Ads</p>
-                            <p>🔹 Conhecimentos básicos em frontend</p>
-                        </ul>
-                    </div>
+                    <ul class="card-list">
+                        <li>Desenvolvimento de pipelines com Airflow</li>
+                        <li>ETL com ferramentas modernas e escaláveis</li>
+                    </ul>
                 </div>
-            </section>
-            <section>
+
+                <div class="skill-card">
+                    <div class="card-header">
+                        <span class="check">🗄️</span>
+                        <h3>Bancos de Dados & Armazenamento</h3>
+                    </div>
+                    <ul class="card-list">
+                        <li>SQL: MSSQL, PostgreSQL, MySQL</li>
+                        <li>NoSQL: MongoDB</li>
+                        <li>Lakehouse com MinIO, S3 e Azure</li>
+                    </ul>
+                </div>
+
+                <div class="skill-card">
+                    <div class="card-header">
+                        <span class="check">🐍</span>
+                        <h3>Programação & APIs</h3>
+                    </div>
+                    <ul class="card-list">
+                        <li>Python para automação e análise</li>
+                        <li>APIs REST com FastAPI</li>
+                        <li>Integração de sistemas via REST APIs</li>
+                    </ul>
+                </div>
+
+                <div class="skill-card">
+                    <div class="card-header">
+                        <span class="check">🐳</span>
+                        <h3>Infraestrutura & DevOps</h3>
+                    </div>
+                    <ul class="card-list">
+                        <li>Docker & Docker-Compose</li>
+                        <li>Controle de versão com Git/GitHub</li>
+                    </ul>
+                </div>
+
+                <div class="skill-card">
+                    <div class="card-header">
+                        <span class="check">📊</span>
+                        <h3>BI & Data Visualization</h3>
+                    </div>
+                    <ul class="card-list">
+                        <li>Dashboards em Power BI, Metabase e Streamlit</li>
+                        <li>Modelagem de dados com Excel</li>
+                    </ul>
+                </div>
+
+                <div class="skill-card">
+                    <div class="card-header">
+                        <span class="check">🌐</span>
+                        <h3>WebApp & Marketing Digital</h3>
+                    </div>
+                    <ul class="card-list">
+                        <li>Aplicações web com Streamlit</li>
+                        <li>Google Analytics & Google Ads</li>
+                        <li>Conhecimentos em frontend</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Experiência -->
+        <section id="experiencia">
+            <div class="section-header">
+                <span class="section-icon">💼</span>
                 <h2>Experiência</h2>
-                <div class="card-header">
-                    <h3>🎯FITCARD TECH</h3>
+            </div>
+
+            <div class="company-block">
+                <div class="company-name">
+                    🏢 FITCARD TECH
+                    <div class="company-divider"></div>
                 </div>
-                <p><b>🔹Especialista em BI</b></p>
-                <p>⏱️De jun de 2025 até o momento</p>
-                <p>📌Campinas, São Paulo, Brasil</p>
-
-                <p><b>🔹Analista de BI Senior</b></p>
-                <p>⏱️De jul de 2020 até o mai de 2025 · 4 anos 11 meses</p>
-                <p>📌Campinas, São Paulo, Brasil</p>
-
-                <div class="card-header">
-                    <h3>🎯NAVEGAR TI</h3>
+                <div class="job-entries">
+                    <div class="job-entry">
+                        <div class="job-title">Especialista em BI</div>
+                        <div class="job-meta">
+                            <span class="job-period">🗓️ Jun 2025 – presente</span>
+                            <span class="job-location">📍 Campinas, SP</span>
+                        </div>
+                    </div>
+                    <div class="job-entry">
+                        <div class="job-title">Analista de BI Sênior</div>
+                        <div class="job-meta">
+                            <span class="job-period">🗓️ Jul 2020 – Mai 2025 · 4 anos 11 meses</span>
+                            <span class="job-location">📍 Campinas, SP</span>
+                        </div>
+                    </div>
                 </div>
-                <p><b>🔹Analista de BI Pleno</b></p>
-                <p>⏱️De out de 2016 até jul de 2020 · 3 anos 10 meses</p>
-                <p>📌Campinas, São Paulo, Brasil</p>
+            </div>
 
-                <p><b>🔹Analista de suporte</b></p>
-                <p>⏱️De mar de 2018 até ago de 2019 · 1 ano 6 meses</p>
-                <p>📌Campinas, São Paulo, Brasil</p>
-
-                <div class="card-header">
-                    <h3>🎯HOSPITAL VERA CRUZ</h3>
+            <div class="company-block">
+                <div class="company-name">
+                    🏢 NAVEGAR TI
+                    <div class="company-divider"></div>
                 </div>
-                <p><b>🔹Consultor de BI</b></p>
-                <p>⏱️De ago de 2019 até nov de 2019 · 4 meses</p>
-                <p>📌Campinas, São Paulo, Brasil</p>
-
-                <div class="card-header">
-                    <h3>🎯MERIAL SAUDE ANIMAL LTDA</h3>
+                <div class="job-entries">
+                    <div class="job-entry">
+                        <div class="job-title">Analista de BI Pleno</div>
+                        <div class="job-meta">
+                            <span class="job-period">🗓️ Out 2016 – Jul 2020 · 3 anos 10 meses</span>
+                            <span class="job-location">📍 Campinas, SP</span>
+                        </div>
+                    </div>
+                    <div class="job-entry">
+                        <div class="job-title">Analista de Suporte</div>
+                        <div class="job-meta">
+                            <span class="job-period">🗓️ Mar 2018 – Ago 2019 · 1 ano 6 meses</span>
+                            <span class="job-location">📍 Campinas, SP</span>
+                        </div>
+                    </div>
                 </div>
-                <p><b>🔹Analista de BI Junior</b></p>
-                <p>⏱️De jul de 2012 até out de 2016 · 4 anos 4 meses</p>
-                <p>📌Campinas, São Paulo, Brasil</p>
+            </div>
 
-                <div class="card-header">
-                    <h3>🎯IT YOUR'S</h3>
+            <div class="company-block">
+                <div class="company-name">
+                    🏢 HOSPITAL VERA CRUZ
+                    <div class="company-divider"></div>
                 </div>
-                <p><b>🔹Desenvolvedor .Net</b></p>
-                <p>⏱️De dez de 2010 até jun de 2012 · 1 ano 7 meses</p>
-                <p>📌Campinas, São Paulo, Brasil</p>
-            </section>
-            <section>
+                <div class="job-entries">
+                    <div class="job-entry">
+                        <div class="job-title">Consultor de BI</div>
+                        <div class="job-meta">
+                            <span class="job-period">🗓️ Ago 2019 – Nov 2019 · 4 meses</span>
+                            <span class="job-location">📍 Campinas, SP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="company-block">
+                <div class="company-name">
+                    🏢 MERIAL SAÚDE ANIMAL LTDA
+                    <div class="company-divider"></div>
+                </div>
+                <div class="job-entries">
+                    <div class="job-entry">
+                        <div class="job-title">Analista de BI Júnior</div>
+                        <div class="job-meta">
+                            <span class="job-period">🗓️ Jul 2012 – Out 2016 · 4 anos 4 meses</span>
+                            <span class="job-location">📍 Campinas, SP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="company-block">
+                <div class="company-name">
+                    🏢 IT YOUR'S
+                    <div class="company-divider"></div>
+                </div>
+                <div class="job-entries">
+                    <div class="job-entry">
+                        <div class="job-title">Desenvolvedor .NET</div>
+                        <div class="job-meta">
+                            <span class="job-period">🗓️ Dez 2010 – Jun 2012 · 1 ano 7 meses</span>
+                            <span class="job-location">📍 Campinas, SP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formação Acadêmica -->
+        <section id="formacao">
+            <div class="section-header">
+                <span class="section-icon">🎓</span>
                 <h2>Formação Acadêmica</h2>
-                <p>MBA em Data Science <a href="https://github.com/mgiampietrojr/profile/blob/main/Diploma%20-%20MBA.pdf" target="_blank">[Diploma]</a> <a href="https://github.com/mgiampietrojr/profile/blob/main/Declara%C3%A7%C3%A3o%20de%20conclus%C3%A3o%20-%20Marco%20Antonio.pdf" target="_blank">[Notas]</a></p>
-                <p>Analise e desenvolvimento de sistemas <a href="https://github.com/mgiampietrojr/profile/blob/main/Diploma%20Faculdade.pdf" target="_blank">[Diploma]</a></p>
-            </section>
-            <section>
+            </div>
+
+            <div class="edu-item">
+                <span class="edu-icon">🎓</span>
+                <div class="edu-details">
+                    <h3>MBA em Data Science</h3>
+                    <div class="edu-links">
+                        <a href="https://github.com/mgiampietrojr/profile/blob/main/Diploma%20-%20MBA.pdf" target="_blank" class="edu-link">Diploma</a>
+                        <a href="https://github.com/mgiampietrojr/profile/blob/main/Declara%C3%A7%C3%A3o%20de%20conclus%C3%A3o%20-%20Marco%20Antonio.pdf" target="_blank" class="edu-link">Notas</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edu-item">
+                <span class="edu-icon">🎓</span>
+                <div class="edu-details">
+                    <h3>Análise e Desenvolvimento de Sistemas</h3>
+                    <div class="edu-links">
+                        <a href="https://github.com/mgiampietrojr/profile/blob/main/Diploma%20Faculdade.pdf" target="_blank" class="edu-link">Diploma</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cursos Extracurriculares -->
+        <section id="cursos">
+            <div class="section-header">
+                <span class="section-icon">📚</span>
                 <h2>Cursos Extracurriculares</h2>
-                <p>Programa de Melhoria de Processos - Fitcard Tech <a href="https://github.com/mgiampietrojr/profile/blob/main/Kaizen-Marco-Antonio-Luiz-Giampietro-Junior.jpg" target="_blank">[Diploma]</a></p>
-                <p>Pipeline ETL com Python - Validando dados e planilhas de Excel <a href="https://github.com/mgiampietrojr/profile/blob/main/Pipeline%20ETL%20com%20Python%20-%20Validando%20dados%20e%20planilhas%20de%20Excel.png" target="_blank">[Diploma]</a></p>
-                <p>Conceitos Básicos da LGPD V.01/24 <a href="https://github.com/mgiampietrojr/profile/blob/main/CONCEITOS_B%C3%81SICOS_DA_LGPD_V.0124-%F0%9F%94%93_O_seu_certificado_est%C3%A1_pronto!_310381.pdf" target="_blank">[Diploma]</a></p>
-                <p>Incidentes de Segurança V.112024 <a href="https://github.com/mgiampietrojr/profile/blob/main/Incidentes_de_Seguran%C3%A7a_%5BV.112024%5D-%F0%9F%94%93_O_seu_certificado_de_conclus%C3%A3o_est%C3%A1_pronto!_328828.pdf" target="_blank">[Diploma]</a></p>
-                <p>Python Fundamentos Para Análise de Dados 3.0 <a href="https://github.com/mgiampietrojr/profile/blob/main/certificate-python-fundamentos-para-analise-de-dados-30-57b4a75247d7dd688d8b456b.pdf" target="_blank">[Diploma]</a></p>
-                <p>Big Data Fundamentos 2.0 <a href="https://github.com/mgiampietrojr/profile/blob/main/certificate-big-data-fundamentos-20-5727789d47d7ddbd598b4581.pdf" target="_blank">[Diploma]</a></p>
-                <p>Introdução à Ciência de Dados 2.0 <a href="https://github.com/mgiampietrojr/profile/blob/main/certificate-introducao-a-ciencia-de-dados-20-57e4c96f47d7dd071b8b456b.pdf" target="_blank">[Diploma]</a></p>
-                <p>Microsoft Power BI Para Data Science, Versão 2.0 <a href="https://github.com/mgiampietrojr/profile/blob/main/certificate-microsoft-power-bi-para-data-science-versao-20-59324d705e4cde7c5e8b4581.pdf" target="_blank">[Diploma]</a></p>
-            </section>
-            <footer>
-                <p>LinkedIn: <a href="https://www.linkedin.com/in/marco-giampietro/" target="_blank">linkedin.com/in/marco-giampietro/</a></p>
-                <p>Medium: <a href="https://medium.com/@marcogiampietro/" target="_blank">medium.com/@marcogiampietro/</a></p>
-            </footer>
-        </main>
-    </body>
+            </div>
+            <div class="courses-grid">
+
+                <div class="course-item">
+                    <span class="course-name">Programa de Melhoria de Processos - Fitcard Tech</span>
+                    <a href="https://github.com/mgiampietrojr/profile/blob/main/Kaizen-Marco-Antonio-Luiz-Giampietro-Junior.jpg" target="_blank" class="course-link">Diploma</a>
+                </div>
+
+                <div class="course-item">
+                    <span class="course-name">Pipeline ETL com Python - Validando dados e planilhas Excel</span>
+                    <a href="https://github.com/mgiampietrojr/profile/blob/main/Pipeline%20ETL%20com%20Python%20-%20Validando%20dados%20e%20planilhas%20de%20Excel.png" target="_blank" class="course-link">Diploma</a>
+                </div>
+
+                <div class="course-item">
+                    <span class="course-name">Conceitos Básicos da LGPD V.01/24</span>
+                    <a href="https://github.com/mgiampietrojr/profile/blob/main/CONCEITOS_B%C3%81SICOS_DA_LGPD_V.0124-%F0%9F%94%93_O_seu_certificado_est%C3%A1_pronto!_310381.pdf" target="_blank" class="course-link">Diploma</a>
+                </div>
+
+                <div class="course-item">
+                    <span class="course-name">Incidentes de Segurança V.112024</span>
+                    <a href="https://github.com/mgiampietrojr/profile/blob/main/Incidentes_de_Seguran%C3%A7a_%5BV.112024%5D-%F0%9F%94%93_O_seu_certificado_de_conclus%C3%A3o_est%C3%A1_pronto!_328828.pdf" target="_blank" class="course-link">Diploma</a>
+                </div>
+
+                <div class="course-item">
+                    <span class="course-name">Python Fundamentos Para Análise de Dados 3.0</span>
+                    <a href="https://github.com/mgiampietrojr/profile/blob/main/certificate-python-fundamentos-para-analise-de-dados-30-57b4a75247d7dd688d8b456b.pdf" target="_blank" class="course-link">Diploma</a>
+                </div>
+
+                <div class="course-item">
+                    <span class="course-name">Big Data Fundamentos 2.0</span>
+                    <a href="https://github.com/mgiampietrojr/profile/blob/main/certificate-big-data-fundamentos-20-5727789d47d7ddbd598b4581.pdf" target="_blank" class="course-link">Diploma</a>
+                </div>
+
+                <div class="course-item">
+                    <span class="course-name">Introdução à Ciência de Dados 2.0</span>
+                    <a href="https://github.com/mgiampietrojr/profile/blob/main/certificate-introducao-a-ciencia-de-dados-20-57e4c96f47d7dd071b8b456b.pdf" target="_blank" class="course-link">Diploma</a>
+                </div>
+
+                <div class="course-item">
+                    <span class="course-name">Microsoft Power BI Para Data Science, Versão 2.0</span>
+                    <a href="https://github.com/mgiampietrojr/profile/blob/main/certificate-microsoft-power-bi-para-data-science-versao-20-59324d705e4cde7c5e8b4581.pdf" target="_blank" class="course-link">Diploma</a>
+                </div>
+
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-links">
+                <a href="https://www.linkedin.com/in/marco-giampietro/" target="_blank" class="footer-link">
+                    🔗 LinkedIn
+                </a>
+                <a href="https://medium.com/@marcogiampietro/" target="_blank" class="footer-link">
+                    ✍️ Medium
+                </a>
+            </div>
+            <p class="footer-copy">Marco Giampietro &copy; 2025</p>
+        </footer>
+
+    </main>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function toggleMenu() {
+            const isOpen = sidebar.classList.toggle('open');
+            overlay.classList.toggle('active', isOpen);
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) toggleMenu();
+            });
+        });
+    </script>
+
+</body>
 </html>
