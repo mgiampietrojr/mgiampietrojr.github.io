@@ -1290,7 +1290,7 @@
                     Medium
                 </a>
             </div>
-            <p class="footer-copy">Marco Giampietro &copy; 2025</p>
+            <p class="footer-copy">Marco Giampietro &copy; <span id="currentYear"></span></p>
         </footer>
 
     </main>
@@ -1490,6 +1490,8 @@
         sidebarToggle.addEventListener('click', () => {
             sidebar.classList.toggle('collapsed');
         });
+
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
 
 </body>
